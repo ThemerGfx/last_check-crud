@@ -8,80 +8,82 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-///**** MONGO DRIVER ****///
+////////// MONGO DRIVER
 const mongo_url = 'mongodb://localhost:27017'
-const dataBase = "last_checkpoint"
+const dataBase = "final_project"
 
-MongoClient.connect(mongo_url, (err, client ) => {
-    assert.equal(err, null, 'data base connection failed')
+MongoClient.connect(mongo_url, (err, client) => {
+    assert.equal(err, null, 'database connection failed')
     const db = client.db(dataBase)
 
-    //** ADD CONTACT **//
-    app.post('/add', (req, res) => {
-        console.log('req add :', req.body)
-        const contactToAdd = {
+    ////// ADD STUDENT
+    app.post('/addone', (req, res) => {
+        const studentToAdd = {
             name: req.body.name,
-            number: req.body.number,
-            email: req.body.email
+            email: req.body.email,
+            phone: req.body.phone,
+            cash: req.body.cash,
+            level: req.body.level,
+            time: req.body.time
         }
-        // let newContact = req.body
-        db.collection('contacts').insertOne(contactToAdd, (err, data) => {
-            if (err) res.send('cannot add contact')
-            else res.send('contact added')
+        db.collection('students').insertOne(studentToAdd, (err, data) => {
+            if (err) res.send('cannot add student')
+            else res.send('student added')
         })
     })
-    //** GET ALL CONTACTS **//
-    app.get('/liste', (req, res) => {
-        db.collection('contacts').find().toArray((err, data) => {
-            if (err) res.send('cannot fecth contacts')
+    ////// GET ALL STUDENTS
+    app.get('/getall', (req, res) => {
+        db.collection('students').find().toArray((err, data) => {
+            if (err) res.send('cannot fetch students')
             else res.send(data)
         })
     })
-    //** GET ONE CONTACT **//
-    app.get('/read/:id', (req, res) => {
+    ////// GET ONE STUDENT
+    app.get('/getone/:id', (req, res) => {
         let searchedContactId = ObjectID(req.params.id)
-        db.collection('contacts').findOne({_id: searchedContactId}, (err, data) => {
-            if (err) res.send('cannot fetch contact')
+        db.collection('students').findOne({_id: searchedContactId}, (err, data) => {
+            if (err) res.send('cannot fetch student')
             else res.send(data)
         })
     })
-    //** MODIFY ONE CONTACT **//
-    app.put('/update/:id', (req, res) => {
-        console.log('req: ', req);
+    ////// MODIFY STUDENT
+    app.put('/modifyone/:id', (req, res) => {
         let IdModify = ObjectID(req.params.id)
-        const contactToModify = {
+        const studentToModify = {
             name: req.body.name,
-            number: req.body.number,
-            email: req.body.email
+            email: req.body.email,
+            phone: req.body.phone,
+            cash: req.body.cash,
+            level: req.body.level,
+            time: req.body.time
         }
-        
-        db.collection('contacts').findOneAndUpdate(
+        db.collection('students').findOneAndUpdate(
             {_id: IdModify},
             {
                 $set: {
-                    ...contactToModify
+                    ...studentToModify
                 }
             },
             (err, data) => {
-                if (err) res.send('cannot modify contact')
-                else res.send('contact was modified')
+                if (err) res.send('cannot modify student')
+                else res.send('student was modified')
             }
         )
     })
-    //** DELETE ONE CONTACT **//
-    app.delete('/delete/:id', (req, res) => {
-        let ContactToRemove = ObjectID(req.params.id)
-        db.collection('contacts').findOneAndDelete(
-            {_id: ContactToRemove},
+    ////// DELETE ONE STUDENT
+    app.delete('/deleteone/:id', (req, res) => {
+        let studentToRemove = ObjectID(req.params.id)
+        db.collection('students').findOneAndDelete(
+            {_id: studentToRemove},
             (err, data) => {
-                if (err) res.send('cannot delete contact')
-                else res.send('contact was deleted')
+                if (err) res.send('cannot delete student')
+                else res.send('student was deleted')
             }
         )
     })
 })
 
 app.listen(5000, (err) => {
-    if(err) console.log("server err")
+    if (err) console.log("server error")
     else console.log("server is running on port 5000")
 })

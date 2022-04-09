@@ -15,7 +15,7 @@
     "firebase": "^5.9.1",
     "firebase-admin": "^7.1.1",
     "mobiscroll": "^3.0.0-beta6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongodb": "^3.5.1",
     "mongodb-client-encryption": "^1.0.1",
     "react": "^16.8.5",

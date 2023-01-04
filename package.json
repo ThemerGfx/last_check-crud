@@ -25,7 +25,7 @@
     "react-redux": "^6.0.1",
     "react-redux-firebase": "3.0.0-alpha.10",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "react-whirligig": "^6.5.12",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",

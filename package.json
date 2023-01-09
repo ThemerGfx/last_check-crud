@@ -13,7 +13,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^5.9.1",
-    "firebase-admin": "^7.1.1",
+    "firebase-admin": "^11.4.1",
     "mobiscroll": "^3.0.0-beta6",
     "moment": "^2.24.0",
     "mongodb": "^3.5.1",
